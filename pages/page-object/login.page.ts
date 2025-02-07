@@ -16,11 +16,13 @@ export class LoginPage extends BasePage {
 
   //sample method
   async clickGetStarted(): Promise<void> {
+    // This wait will be removed in actual test as the static wait is not recommended
     await this.page.waitForTimeout(5000);
     await this.getStartedLink.click();
   }
 
   async isDisplayed(): Promise<boolean> {
+    // This wait will be removed in actual test as the static wait is not recommended
     await this.page.waitForTimeout(5000);
     return await this.heading.isVisible({ timeout: 5000 });
   }
