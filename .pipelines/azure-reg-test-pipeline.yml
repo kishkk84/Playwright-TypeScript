@@ -3,24 +3,24 @@ trigger: none
 pr: none
 
 parameters:
-- name: environment
-  type: string
-  default: 'local'
-  values:
-  - local
-  - test
+  - name: environment
+    type: string
+    default: "local"
+    values:
+      - local
+      - test
 
 variables:
   ROOT_PATH: $(Pipeline.Workspace)/s
   REPORT_PATH: $(ROOT_PATH)/reports
 
 schedules:
-- cron: "0 2 * * 1-5"
-  displayName: Run Regression tests nightly on weekdays
-  branches:
-    include:
-    - main
-  always: true
+  - cron: "0 2 * * 1-5"
+    displayName: Run Regression tests nightly on weekdays
+    branches:
+      include:
+        - main
+    always: true
 
 pool:
   vmImage: ubuntu-latest
@@ -71,7 +71,7 @@ steps:
       PW_TEST_HTML_REPORT_OPEN=never npm run test:reg:env-${{ parameters.environment }}
     displayName: "Regression Tests"
     env:
-      CI: 'true'
+      CI: "true"
 
   - script: |
       allure generate $(REPORT_PATH)/allure-results --clean -o  $(REPORT_PATH)/allure-report
@@ -85,11 +85,11 @@ steps:
   - task: PublishTestResults@2
     inputs:
       searchFolder: $(REPORT_PATH)
-      testResultsFormat: 'JUnit'
-      testResultsFiles: '**/results.xml'
+      testResultsFormat: "JUnit"
+      testResultsFiles: "**/results.xml"
       mergeTestResults: true
       failTaskOnFailedTests: true
-      testRunTitle: 'Scottish Power Regression Tests'
+      testRunTitle: "Scottish Power Regression Tests"
     condition: succeededOrFailed()
     displayName: "Publish Regression Test Results"
 
@@ -97,6 +97,6 @@ steps:
     inputs:
       targetPath: $(REPORT_PATH)
       artifact: $(system.JobId)-results
-      publishLocation: 'pipeline'
+      publishLocation: "pipeline"
     condition: succeededOrFailed()
     displayName: "Publish Regression Test Artifacts"

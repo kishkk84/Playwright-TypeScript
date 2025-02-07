@@ -11,6 +11,7 @@ Follow these steps to get the code up and running on your system.
 ### Prerequisites
 
 Ensure you have the following installed on your system:
+
 - [Node.js](https://nodejs.org/) (version 20 or higher)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 - [Playwright](https://playwright.dev/)
@@ -18,17 +19,20 @@ Ensure you have the following installed on your system:
 ### Installation
 
 1. Clone the repository:
+
    ```sh
    git clone git@ssh.dev.azure.com:v3/EDT-UK046/UKEngineering/Scottish-Power-GEM-Playwright
    cd Scottish-Power-GEM-Playwright
    ```
 
 2. Install the dependencies:
-   ``` 
+
+   ```
    npm install
    ```
 
 3. Install Playwright browsers:
+
    ```
    npx playwright install
    npx playwright install-deps
@@ -42,26 +46,33 @@ Ensure you have the following installed on your system:
    ```
 
 ## Configuration
+
 Create a `.env.local` file in the `env` directory with the necessary environment variables. The variables with values can get from one of your colleagues.
 
 ## Running Tests
 
 ### Running Regression Tests
+
 From the root of the project run the below command
+
 ```
 npm run test:reg
 ```
+
 ### Run Specific Test
+
 ```
 npx playwright test path/to/test-file.spec.ts
 ```
 
 ### View test results:
+
 ```
 npx playwright show-report
 ```
 
 ## Project Structure
+
 - .git: Contains hooks
 - .pipelines: Contains pipeline configuration files for CI/CD.
 - authentication: Stores authentication-related files.

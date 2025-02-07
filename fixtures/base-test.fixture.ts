@@ -17,29 +17,6 @@ async function setup(page: Page) {
   await page.goto(process.env.BASE_URL as string);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Test teardown
 async function teardown(page: Page) {
   if (test.info().status !== test.info().expectedStatus) {
