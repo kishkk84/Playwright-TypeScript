@@ -1,0 +1,36 @@
+{
+  "name": "@spgis/testing",
+  "version": "1.0.0",
+  "description": "This repo will contain all the GIS testing related code.",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write",
+    "build": "echo 'TESTING: no work required'",
+    "test": "echo 'TESTING: no work required'",
+    "test:reg": "cross-env test_env=local playwright test -c playwright.config.ts --project=\"Regression Tests\"",
+    "test:reg:debug": "cross-env test_env=local playwright test -c playwright.config.ts --project=\"Regression Tests\" --ui"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --check"
+    ]
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.9.1",
+    "@faker-js/faker": "^8.4.1",
+    "@playwright/experimental-ct-react": "^1.45.3",
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^20.12.10",
+    "allure-commandline": "^2.32.0",
+    "allure-playwright": "^3.0.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "monocart-reporter": "^2.4.6",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2"
+  }
+}

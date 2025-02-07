@@ -1,20 +1,74 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# SCOTTISH-POWER-GEM_PLAYWRIGHT TEST REPOSITORY
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## Introduction
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+This project is a Playwright-based testing framework for the Scottish Power GIS application(s). The framework is designed to automate APIs, end-to-end & Regression testing, ensuring the application functions correctly across different browsers, APIs and devices.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+## Getting Started
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Follow these steps to get the code up and running on your system.
+
+### Prerequisites
+
+Ensure you have the following installed on your system:
+- [Node.js](https://nodejs.org/) (version 20 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [Playwright](https://playwright.dev/)
+
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone git@ssh.dev.azure.com:v3/EDT-UK046/UKEngineering/Scottish-Power-GEM-Playwright
+   cd Scottish-Power-GEM-Playwright
+   ```
+
+2. Install the dependencies:
+   ``` 
+   npm install
+   ```
+
+3. Install Playwright browsers:
+   ```
+   npx playwright install
+   npx playwright install-deps
+   ```
+
+4. Install the below extensions from visual studio code extensions.
+   ```
+   Playwright Test for VSCode
+   Prettier - Code formatter
+   open in browser
+   ```
+
+## Configuration
+Create a `.env.local` file in the `env` directory with the necessary environment variables. The variables with values can get from one of your colleagues.
+
+## Running Tests
+
+### Running Regression Tests
+From the root of the project run the below command
+```
+npm run test:reg
+```
+### Run Specific Test
+```
+npx playwright test path/to/test-file.spec.ts
+```
+
+### View test results:
+```
+npx playwright show-report
+```
+
+## Project Structure
+- .git: Contains hooks
+- .pipelines: Contains pipeline configuration files for CI/CD.
+- authentication: Stores authentication-related files.
+- env: Contains environment-specific configuration files.
+- fixtures: Contains fixture files for setting up & tearing down the test & data.
+- pages: Contains page object files for the application(s).
+- playwright: Contains global setup and global teardown scripts for Playwright.
+- reports: Stores all test reports like allure, html, json etc.
+- tests: Contains api & ui test files.
+- utils: Contains utility functions and helpers.
