@@ -2,16 +2,21 @@ import { Locator, Page } from "@playwright/test";
 import { BasePage } from "../base.page.ts";
 
 export class LoginPage extends BasePage {
-  //sample locator
-  private getStartedLink: Locator = this.page.getByRole("link", {
-    name: "Get started",
-  });
-  private heading: Locator = this.page.getByRole("heading", {
-    name: "Installation",
-  });
+  private getStartedLink!: Locator;
+  private heading!: Locator;
+
+  setLocators(page: Page): void {
+    this.getStartedLink = page.getByRole("link", {
+      name: "Get started",
+    });
+    this.heading = page.getByRole("heading", {
+      name: "Installation",
+    });
+  }
 
   constructor(page: Page) {
     super(page);
+    this.setLocators(page);
   }
 
   //sample method

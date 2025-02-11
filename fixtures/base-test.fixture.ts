@@ -4,9 +4,9 @@ import { Page, test as baseTest } from "@playwright/test";
 export const test = baseTest.extend<{ autoTestFixture: Page }>({
   autoTestFixture: [
     async ({ page }, use) => {
-      setup(page);
+      await setup(page);
       await use(page);
-      teardown(page);
+      await teardown(page);
     },
     { scope: "test", auto: true },
   ],
