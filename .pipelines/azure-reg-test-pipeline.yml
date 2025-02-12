@@ -1,0 +1,102 @@
+trigger: none
+
+pr: none
+
+parameters:
+  - name: environment
+    type: string
+    default: "local"
+    values:
+      - local
+      - test
+
+variables:
+  ROOT_PATH: $(Pipeline.Workspace)/s
+  REPORT_PATH: $(ROOT_PATH)/reports
+
+schedules:
+  - cron: "0 2 * * 1-5"
+    displayName: Run Regression tests nightly on weekdays
+    branches:
+      include:
+        - main
+    always: true
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UseNode@1
+    inputs:
+      version: "20.x"
+    displayName: "Install Node 20"
+
+  - script: |
+      npm install
+    displayName: "Install"
+
+  - script: |
+      npm run prettier
+    displayName: "Prettier"
+
+  - script: |
+      npm run lint
+    displayName: "Linting"
+
+  - script: |
+      npm run build
+    displayName: "Build"
+
+  - script: |
+      npx playwright install
+      npx playwright install-deps
+    displayName: "Install Playwright"
+
+  - script: |
+      npm install -g allure-commandline
+    displayName: "Install Allure Commandline"
+
+  - task: Bash@3
+    inputs:
+      targetType: "filepath"
+      filePath: $(ROOT_PATH)/scripts/variables.sh
+    env:
+      API_BASE_URL: $(API_BASE_URL)
+      BASE_URL: $(BASE_URL)
+      ENV_DIR_PATH: $(Pipeline.Workspace)
+      TENANT_ID: $(TENANT_ID)
+    displayName: "Set Environment Variables"
+
+  - script: |
+      PW_TEST_HTML_REPORT_OPEN=never npm run test:reg:env-${{ parameters.environment }}
+    displayName: "Regression Tests"
+    env:
+      CI: "true"
+
+  - script: |
+      allure generate $(REPORT_PATH)/allure-results --clean -o  $(REPORT_PATH)/allure-report
+    displayName: "Generate Allure Report"
+
+  - task: PublishAllureReport@1
+    inputs:
+      reportDir: $(REPORT_PATH)/allure-report
+    displayName: "Publish Allure Report"
+
+  - task: PublishTestResults@2
+    inputs:
+      searchFolder: $(REPORT_PATH)
+      testResultsFormat: "JUnit"
+      testResultsFiles: "**/results.xml"
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: "Scottish Power Regression Tests"
+    condition: succeededOrFailed()
+    displayName: "Publish Regression Test Results"
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: $(REPORT_PATH)
+      artifact: $(system.JobId)-results
+      publishLocation: "pipeline"
+    condition: succeededOrFailed()
+    displayName: "Publish Regression Test Artifacts"
