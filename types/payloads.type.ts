@@ -4,9 +4,3 @@ export interface UserPayload {
   age?: number; // Optional property
   job: string;
 }
-
-export interface ApiResponse<T> {
-  data: T;
-  status: number;
-  message: string;
-}
