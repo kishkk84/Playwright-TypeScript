@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import { PageInfo } from "./pageInfo.page";
+import { PageInfo } from "../types/pageInfo.type.ts";
 
 export abstract class BasePage {
   protected page: Page;
