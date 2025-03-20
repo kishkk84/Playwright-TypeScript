@@ -5,7 +5,7 @@ node_modules/
 /env/
 /authentication/
 /.git/*
+.git/*
 !/.git/hooks/
 /.git/hooks/*
 !/.git/hooks/**
-!/.git/workflows/

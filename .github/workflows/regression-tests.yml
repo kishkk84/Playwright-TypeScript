@@ -1,0 +1,96 @@
+name: Regression Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 2 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run the tests against"
+        required: true
+        default: "local"
+        options:
+          - local
+          - test
+          - stage
+
+jobs:
+  regression-tests:
+    runs-on: ubuntu-latest
+
+    env:
+      API_BASE_URL: ${{ secrets.API_BASE_URL }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+      TENANT_ID: ${{ secrets.TENANT_ID }}
+      CI: "true"
+      REPORT_PATH: ${{ github.workspace }}/reports
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Prettier
+        run: npm run prettier
+
+      - name: Run Linting
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
+
+      - name: Install Playwright
+        run: |
+          npx playwright install
+          npx playwright install-deps
+
+      - name: Install Allure Commandline
+        run: npm install -g allure-commandline
+
+      - name: Set Environment Variables
+        run: ${{ github.workspace }}/s/scripts/variables.sh
+        env:
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          ENV_DIR_PATH: ${{ github.workspace }}
+          TENANT_ID: ${{ secrets.TENANT_ID }}
+          TEST_ENV: ${{ secrets.TEST_ENV }}
+
+      - name: Run Regression Tests
+        run: PW_TEST_HTML_REPORT_OPEN=never npm run test:reg
+
+      - name: Generate Allure Report
+        run: allure generate ${{ env.REPORT_PATH }}/allure-results --clean -o ${{ env.REPORT_PATH }}/allure-report
+
+      - name: Publish Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: ${{ env.REPORT_PATH }}/allure-report
+
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ${{ env.REPORT_PATH }}
+
+      - name: Publish Regression Test Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: regression-test-artifacts
+          path: ${{ env.REPORT_PATH }}

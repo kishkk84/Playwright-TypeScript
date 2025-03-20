@@ -1,4 +1,4 @@
-# SCOTTISH-POWER-GEM_PLAYWRIGHT TEST REPOSITORY
+# SCOTTISH-POWER-GEM-PLAYWRIGHT TEST REPOSITORY
 
 ## Introduction
 
@@ -21,8 +21,8 @@ Ensure you have the following installed on your system:
 1. Clone the repository:
 
    ```sh
-   git clone git@ssh.dev.azure.com:v3/EDT-UK046/UKEngineering/Scottish-Power-GEM-Playwright
-   cd Scottish-Power-GEM-Playwright
+   git clone https://github.com/Iberdrola/scottish-power-gem-playwright.git
+   cd scottish-power-gem-playwright
    ```
 
 2. Install the dependencies:
