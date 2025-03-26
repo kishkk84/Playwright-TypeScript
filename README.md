@@ -1,8 +1,8 @@
-# SCOTTISH-POWER-GEM-PLAYWRIGHT TEST REPOSITORY
+# PLAYWRIGHT TEST REPOSITORY
 
 ## Introduction
 
-This project is a Playwright-based testing framework for the Scottish Power GIS application(s). The framework is designed to automate APIs, end-to-end & Regression testing, ensuring the application functions correctly across different browsers, APIs and devices.
+This project is a Playwright-based testing framework for UI application(s). The framework is designed to automate APIs, end-to-end & Regression testing, ensuring the application functions correctly across different browsers, APIs and devices.
 
 ## Getting Started
 
@@ -21,8 +21,8 @@ Ensure you have the following installed on your system:
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/Iberdrola/scottish-power-gem-playwright.git
-   cd scottish-power-gem-playwright
+   git clone https://github.com/kishkk84/Playwright-TypeScript.git
+   cd Playwright-TypeScript
    ```
 
 2. Install the dependencies:
@@ -47,7 +47,7 @@ Ensure you have the following installed on your system:
 
 ## Configuration
 
-Create a `.env.local` file in the `env` directory with the necessary environment variables. The variables with values can get from one of your colleagues.
+Create a `.env.local` file in the `env` directory with the necessary environment variables. 
 
 ## Running Tests
 
